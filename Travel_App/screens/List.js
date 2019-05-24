@@ -1,42 +1,251 @@
 import React, { Component } from "react";
 
-import { Text, StyleSheet, View, Dimensions } from "react-native";
+
+
+import { Text, StyleSheet, View, Image, Dimensions,FlatList, ImageBackground, Animated } from "react-native";
+
 
 //import styleSheet
-import styles from '../src/styleSheet';
+import styles from '../src/style/styleSheet';
 
 const {width, height } = Dimensions.get('screen');
 
-export default class List extends Component {
+
+//Add data
+
+const mocks = [{
+  id: 1,
+  user: {
+    name: 'Phát',
+    avatar: 'https://randomuser.me/api/portraits/women/44.jpg'
+  },
+  location:'Thành phố Hồ Chí Minh',
+  temperature: 30,
+  title: 'Cầu Vàng',
+  description:'Thành phố Đà Nẵng',
+  rating: 4.2,
+  reviews: 1200,
+  preview: 'https://images.unsplash.com/photo-1558117338-7ef3d637ce2f?auto=format&fit=crop&w=1353&q=80',
+  images: [
+    'https://unsplash.com/photos/gl7HtLuT7iQ?auto=format&fit=crop&w=1350&q=80',
+    'https://unsplash.com/photos/gl7HtLuT7iQ?auto=format&fit=crop&w=1350&q=80',
+    'https://unsplash.com/photos/gl7HtLuT7iQ?auto=format&fit=crop&w=1350&q=80',
+    'https://unsplash.com/photos/gl7HtLuT7iQ?auto=format&fit=crop&w=1350&q=80',
+    ]
+},
+{
+  id: 2,
+  user: {
+    name: 'Phát',
+    avatar: 'https://randomuser.me/api/portraits/women/44.jpg'
+  },
+  location:'Thành phố Hồ Chí Minh',
+  temperature: 30,
+  title: 'Cầu Vàng',
+  description:'Thành phố Đà Nẵng',
+  rating: 4.2,
+  reviews: 1200,
+  preview: 'https://images.unsplash.com/photo-1558127920-90f28455f888?auto=format&fit=crop&w=1350&q=80',
+  images: [
+    'https://unsplash.com/photos/f60qQpYOHd4?auto=format&fit=crop&w=1350&q=80',
+    'https://unsplash.com/photos/f60qQpYOHd4?auto=format&fit=crop&w=1350&q=80',
+    'https://unsplash.com/photos/f60qQpYOHd4?auto=format&fit=crop&w=1350&q=80',
+    'https://unsplash.com/photos/f60qQpYOHd4?auto=format&fit=crop&w=1350&q=80',
+    ]
+},
+{
+    id: 3,
+    user: {
+      name: 'Phát',
+      avatar: 'https://randomuser.me/api/portraits/women/44.jpg'
+    },
+    location:'Thành phố Hồ Chí Minh',
+    temperature: 30,
+    title: 'Cầu Vàng',
+    description:'Thành phố Đà Nẵng',
+    rating: 4.2,
+    reviews: 1200,
+    preview: 'https://images.unsplash.com/photo-1558127920-90f28455f888?auto=format&fit=crop&w=1350&q=80',
+    images: [
+      'https://unsplash.com/photos/f60qQpYOHd4?auto=format&fit=crop&w=1350&q=80',
+      'https://unsplash.com/photos/f60qQpYOHd4?auto=format&fit=crop&w=1350&q=80',
+      'https://unsplash.com/photos/f60qQpYOHd4?auto=format&fit=crop&w=1350&q=80',
+      'https://unsplash.com/photos/f60qQpYOHd4?auto=format&fit=crop&w=1350&q=80',
+      ]
+  },
+  {
+    id: 4,
+    user: {
+      name: 'Phát',
+      avatar: 'https://randomuser.me/api/portraits/women/44.jpg'
+    },
+    location:'Thành phố Hồ Chí Minh',
+    temperature: 30,
+    title: 'Cầu Vàng',
+    description:'Thành phố Đà Nẵng',
+    rating: 4.2,
+    reviews: 1200,
+    preview: 'https://images.unsplash.com/photo-1558127920-90f28455f888?auto=format&fit=crop&w=1350&q=80',
+    images: [
+      'https://unsplash.com/photos/f60qQpYOHd4?auto=format&fit=crop&w=1350&q=80',
+      'https://unsplash.com/photos/f60qQpYOHd4?auto=format&fit=crop&w=1350&q=80',
+      'https://unsplash.com/photos/f60qQpYOHd4?auto=format&fit=crop&w=1350&q=80',
+      'https://unsplash.com/photos/f60qQpYOHd4?auto=format&fit=crop&w=1350&q=80',
+      ]
+  },
+];
+
+
+class List extends Component {
+
   static navigationOptions = {
     header: (
-      <View style={[ styles.row, styles.header, styles.color]}>
+      <View style={[ styles.row, styles.header, styles.flex]}>
         <View>
-          <Text>Search for</Text>
-          <Text>Destination</Text>
+          <Text style={{color:'#d9dde2'}}>Search for</Text>
+          <Text style={{fontSize:24}} >Destination</Text>
         </View>
         <View>
-          <Text>Avatar</Text>
+          <Image style={styles.avatar} source={{uri:'https://randomuser.me/api/portraits/women/65.jpg'}}/>
         </View>
       </View>
     )
   };
+//  renderDots () {
+//   const {destinations} = this.props;
+//   const dotPosition = Animated.divide(this.scrollX, width);
+//     return (
+//       <View style={[styles.flex, styles.row, 
+//       { justifyContent:'center', alignItems:'center', marginTop:(36*2) }]}>
+//         {destinations.map((item,index) =>{
+//           const opacity = dotPosition.interpolate({
+//             inputRange: [index -1, index, index +1],
+//             outputRange: [1, 2, 1],
+//             extrapolate: 'clamp'
+//           });
+//           return (
+//             <Animated.View 
+//             key={`step-${item.id}`} 
+//             style={[styles.dots, styles.activeDot]} >
+//             </Animated.View>
+//           )
+//         })}
+//     </View> 
+//     )
+//  }
 
   renderDestinations = () => {
     return (
-      <View style={[styles.flex, styles.column]}>
-        <Text>Destinations</Text>
-      </View>
-    );
-  };
-  renderRecommended = () => {
-    return (
-      <View style={[styles.flex, styles.column]}>
-        <Text>Recommended</Text>
+      <View style={[styles.flex, styles.column, styles.destinations]}>
+        <FlatList
+        horizontal
+        pagingEnabled
+        scrollEnabled
+        showHorizontalScrollIndicator ={false}
+        decelerationRate={0}
+        scrollEventThrottle={16}
+        snapToAlignment='center'
+        style={{overflow: 'visible',}}
+        data = {this.props.destinations}
+        keyExtractor={(item, index) => `${item.id}`}
+        onScroll={Animated.event([{nativeEvent: { contentOffset: { x: this.scrollX}}
+        }])}
+        renderItem={({ item }) => this.renderDestination(item)}
+        />
+        {/* {this.renderDots()} */}
       </View>
     );
   };
 
+renderDestination = item => {
+  return (
+    <ImageBackground 
+      style={[ styles.destination, styles.shadow]}
+      source= {{uri:item.preview}}
+      imageStyle={{borderRadius: 16}}
+    >
+      <View style={[styles.row,{justifyContent: 'space-between'}]}>
+        <View style={[styles.flex]}>
+          <Image 
+            source={{ uri: item.user.avatar}}
+            style={styles.avatar}
+          />
+        </View>
+
+        <View style={[ styles.column, {paddingHorizontal:18}]}>
+          <Text style={{color:'white', fontWeight:'bold'}}>{item.user.name}</Text>
+          <Text style={{color:'white'}}>{item.location}</Text>
+        </View>
+
+        <View style={[{ justifyContent: 'space-between', alignItems: 'center',}]}>
+          <Text style={styles.rating}>{item.rating}</Text>
+        </View>
+      </View>
+
+      <View style={[styles.column, styles.destinationInfo, styles.shadow]}>
+        <Text style={{fontSize: 18, fontWeight:'500', paddingBottom:8}}>{item.title}</Text>
+        <Text style={{color: '#cbced3'}}>{item.description}</Text>
+      </View>
+    </ImageBackground>
+  )
+}
+
+  renderRecommended = () => {
+    return (
+      <View style={[styles.flex, styles.column, styles.recommended]}>
+        <View style={[
+            styles.row, 
+            {
+            justifyContent:'space-between',
+            alignItems:'flex-end',
+            marginBottom:36,
+            paddingHorizontal: 36,
+            }
+          ]}>
+          <Text style={{fontSize:18}}>Recommended</Text>  
+          <Text style={{color: '#cbced3'}}>More</Text>  
+        </View>
+
+        <View style={[styles.flex, styles.column, styles.recommendedList]}>
+          <FlatList 
+          //feature to scroll picture like the card easily
+            horizontal
+            pagingEnabled
+            scrollEnabled
+            showHorizontalScrollIndicator ={false}
+            scrollEventThrottle={16}
+            snapToAlignment='end'
+            data = {this.props.destinations}
+            keyExtractor={(item, index) => `${item.id}`}
+            renderItem={({ item, index }) => this.renderRecommendation(item, index)}
+          />
+        </View>
+      </View>
+    );
+  };
+
+  renderRecommendation = (item, index) => {
+    return(
+      <View style={[
+        styles.flex, styles.column, styles.recommendation, styles.shadow, 
+        ]}>
+        <View style={[styles.flex]}>
+          <ImageBackground 
+          style={[ {overflow: 'hidden'},styles.flex, styles.row, styles.recommendationImage ]}
+          source= {{uri:item.preview}}>
+              <Text style={{color:'black'}}>{item.temperature}℃</Text>
+              <Text style={{color:'black'}}>Hello</Text>
+          </ImageBackground>
+        </View>
+
+        <View style={[styles.flex, styles.column, {justifyContent:'space-evenly', padding: 18}]}>
+          <Text style={{fontSize: 18, fontWeight:'500', paddingBottom:8}}>{item.title}</Text>
+          <Text style={{color: '#cbced3'}}>{item.location}</Text>
+          <Text style={{color: '#007BFA'}}>{item.rating}</Text>
+        </View>
+      </View>
+    )
+  }
   render() {
     return (
       <View style={[styles.flex, styles.articles]}>
@@ -46,3 +255,9 @@ export default class List extends Component {
     );
   }
 }
+
+List.defaultProps = {
+  destinations: mocks
+}
+ 
+export default List;
