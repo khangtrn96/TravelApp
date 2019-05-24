@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     },
     destination: {
       width: width -(36*2),
-      height: width *0.5,
+      height: width -(36*2),
       marginHorizontal: 36,
       paddingHorizontal: 36,
       paddingVertical: 24,
@@ -97,19 +97,19 @@ const styles = StyleSheet.create({
       shadowRadius: 6,
     },
     dots: {
-        width: 8,
-        height: 8,
-        backgroundColor:'#d9dde2',
-        borderRadius: 4,
+        width: 10,
+        height: 10,
+        borderRadius: 5,
         marginHorizontal:6,
-        borderWidth: 2,
+        borderWidth: 2.5,
+        backgroundColor:'#d9dde2',
         borderColor:'transparent'
     },
     activeDot: {
-        width: 12,
-        height:12,
-        borderRadius: 6,
-        borderWidth: 2,
+        width: 12.5,
+        height:12.5,
+        borderRadius: 6.25,
+        
         borderColor:'#007BFA',
     },
   });

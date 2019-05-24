@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 
-import { Text, StyleSheet, View, Image, Dimensions, FlatList, ImageBackground } from "react-native";
+
+
+import { Text, StyleSheet, View, Image, Dimensions,FlatList, ImageBackground, Animated } from "react-native";
+
 
 //import styleSheet
-import styles from '../src/styleSheet';
+import styles from '../src/style/styleSheet';
 
 const {width, height } = Dimensions.get('screen');
+
+
+//Add data
 
 const mocks = [{
   id: 1,
@@ -89,7 +95,9 @@ const mocks = [{
   },
 ];
 
- class List extends Component {
+
+class List extends Component {
+
   static navigationOptions = {
     header: (
       <View style={[ styles.row, styles.header, styles.flex]}>
@@ -103,14 +111,85 @@ const mocks = [{
       </View>
     )
   };
+//  renderDots () {
+//   const {destinations} = this.props;
+//   const dotPosition = Animated.divide(this.scrollX, width);
+//     return (
+//       <View style={[styles.flex, styles.row, 
+//       { justifyContent:'center', alignItems:'center', marginTop:(36*2) }]}>
+//         {destinations.map((item,index) =>{
+//           const opacity = dotPosition.interpolate({
+//             inputRange: [index -1, index, index +1],
+//             outputRange: [1, 2, 1],
+//             extrapolate: 'clamp'
+//           });
+//           return (
+//             <Animated.View 
+//             key={`step-${item.id}`} 
+//             style={[styles.dots, styles.activeDot]} >
+//             </Animated.View>
+//           )
+//         })}
+//     </View> 
+//     )
+//  }
 
   renderDestinations = () => {
     return (
-      <View style={[styles.flex, styles.column]}>
-        <Text>Destinations</Text>
+      <View style={[styles.flex, styles.column, styles.destinations]}>
+        <FlatList
+        horizontal
+        pagingEnabled
+        scrollEnabled
+        showHorizontalScrollIndicator ={false}
+        decelerationRate={0}
+        scrollEventThrottle={16}
+        snapToAlignment='center'
+        style={{overflow: 'visible',}}
+        data = {this.props.destinations}
+        keyExtractor={(item, index) => `${item.id}`}
+        onScroll={Animated.event([{nativeEvent: { contentOffset: { x: this.scrollX}}
+        }])}
+        renderItem={({ item }) => this.renderDestination(item)}
+        />
+        {/* {this.renderDots()} */}
       </View>
     );
   };
+
+renderDestination = item => {
+  return (
+    <ImageBackground 
+      style={[ styles.destination, styles.shadow]}
+      source= {{uri:item.preview}}
+      imageStyle={{borderRadius: 16}}
+    >
+      <View style={[styles.row,{justifyContent: 'space-between'}]}>
+        <View style={[styles.flex]}>
+          <Image 
+            source={{ uri: item.user.avatar}}
+            style={styles.avatar}
+          />
+        </View>
+
+        <View style={[ styles.column, {paddingHorizontal:18}]}>
+          <Text style={{color:'white', fontWeight:'bold'}}>{item.user.name}</Text>
+          <Text style={{color:'white'}}>{item.location}</Text>
+        </View>
+
+        <View style={[{ justifyContent: 'space-between', alignItems: 'center',}]}>
+          <Text style={styles.rating}>{item.rating}</Text>
+        </View>
+      </View>
+
+      <View style={[styles.column, styles.destinationInfo, styles.shadow]}>
+        <Text style={{fontSize: 18, fontWeight:'500', paddingBottom:8}}>{item.title}</Text>
+        <Text style={{color: '#cbced3'}}>{item.description}</Text>
+      </View>
+    </ImageBackground>
+  )
+}
+
   renderRecommended = () => {
     return (
       <View style={[styles.flex, styles.column, styles.recommended]}>
