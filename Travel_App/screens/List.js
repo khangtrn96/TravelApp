@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Text, StyleSheet, View, Image, Dimensions,FlatList, ImageBackground, Animated } from "react-native";
 
 //import styleSheet
-import styles from '../src/styleSheet';
+import styles from '../src/style/styleSheet';
 
 const {width, height } = Dimensions.get('screen');
 
@@ -104,28 +104,28 @@ class List extends Component {
       </View>
     )
   };
- renderDots () {
-  const {destinations} = this.props;
-  const dotPosition = Animated.divide(this.scrollX, width);
-    return (
-      <View style={[styles.flex, styles.row, 
-      { justifyContent:'center', alignItems:'center', marginTop:(36*2) }]}>
-        {destinations.map((item,index) =>{
-          const opacity = dotPosition.interpolate({
-            inputRange: [index -1, index, index +1],
-            outputRange: [1, 2, 1],
-            extrapolate: 'clamp'
-          });
-          return (
-            <Animated.View 
-            key={`step-${item.id}`} 
-            style={[styles.dots, styles.activeDot]} >
-            </Animated.View>
-          )
-        })}
-    </View> 
-    )
- }
+//  renderDots () {
+//   const {destinations} = this.props;
+//   const dotPosition = Animated.divide(this.scrollX, width);
+//     return (
+//       <View style={[styles.flex, styles.row, 
+//       { justifyContent:'center', alignItems:'center', marginTop:(36*2) }]}>
+//         {destinations.map((item,index) =>{
+//           const opacity = dotPosition.interpolate({
+//             inputRange: [index -1, index, index +1],
+//             outputRange: [1, 2, 1],
+//             extrapolate: 'clamp'
+//           });
+//           return (
+//             <Animated.View 
+//             key={`step-${item.id}`} 
+//             style={[styles.dots, styles.activeDot]} >
+//             </Animated.View>
+//           )
+//         })}
+//     </View> 
+//     )
+//  }
 
   renderDestinations = () => {
     return (
@@ -145,7 +145,7 @@ class List extends Component {
         }])}
         renderItem={({ item }) => this.renderDestination(item)}
         />
-        {this.renderDots()}
+        {/* {this.renderDots()} */}
       </View>
     );
   };
