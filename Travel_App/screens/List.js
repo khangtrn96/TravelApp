@@ -106,15 +106,21 @@ class List extends Component {
   };
  renderDots () {
   const {destinations} = this.props;
-  
+  const dotPosition = Animated.divide(this.scrollX, width);
     return (
       <View style={[styles.flex, styles.row, 
       { justifyContent:'center', alignItems:'center', marginTop:(36*2) }]}>
-        {destinations.map(item =>{
+        {destinations.map((item,index) =>{
+          const opacity = dotPosition.interpolate({
+            inputRange: [index -1, index, index +1],
+            outputRange: [1, 2, 1],
+            extrapolate: 'clamp'
+          });
           return (
             <Animated.View 
             key={`step-${item.id}`} 
-            style={[styles.dots, item.id === 1 ? styles.activeDot : null ]} />
+            style={[styles.dots, styles.activeDot]} >
+            </Animated.View>
           )
         })}
     </View> 
@@ -135,6 +141,8 @@ class List extends Component {
         style={{overflow: 'visible',}}
         data = {this.props.destinations}
         keyExtractor={(item, index) => `${item.id}`}
+        onScroll={Animated.event([{nativeEvent: { contentOffset: { x: this.scrollX}}
+        }])}
         renderItem={({ item }) => this.renderDestination(item)}
         />
         {this.renderDots()}
