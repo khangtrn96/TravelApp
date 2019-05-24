@@ -1,30 +1,11 @@
 import React, { Component } from "react";
 
-import { Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View, Dimensions } from "react-native";
 
-const styles = StyleSheet.create({
-  flex: {
-    flex: 1
-  },
-  column: {
-    flexDirection: "column"
-  },
-  row: {
-    flexDirection: "row"
-  },
-  header: {
-    backgroundColor: "white",
-    paddingHorizontal: 36,
-    paddingTop: 48,
-    paddingBottom: 24
-  },
-  articles: {
-    paddingHorizontal: 36
-  },
-  color: {
-    backgroundColor: 'red'
-  }
-});
+//import styleSheet
+import styles from '../src/styleSheet';
+
+const {width, height } = Dimensions.get('screen');
 
 export default class List extends Component {
   static navigationOptions = {
@@ -41,7 +22,7 @@ export default class List extends Component {
     )
   };
 
-  renderDestination = () => {
+  renderDestinations = () => {
     return (
       <View style={[styles.flex, styles.column]}>
         <Text>Destinations</Text>
@@ -59,7 +40,7 @@ export default class List extends Component {
   render() {
     return (
       <View style={[styles.flex, styles.articles]}>
-        {this.renderDestination()}
+        {this.renderDestinations()}
         {this.renderRecommended()}
       </View>
     );
