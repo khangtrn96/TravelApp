@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Text, StyleSheet, View, Dimensions } from "react-native";
+import { Text, StyleSheet, View, Image, Dimensions } from "react-native";
 
 //import styleSheet
 import styles from '../src/styleSheet';
@@ -10,13 +10,13 @@ const {width, height } = Dimensions.get('screen');
 export default class List extends Component {
   static navigationOptions = {
     header: (
-      <View style={[ styles.row, styles.header, styles.color]}>
+      <View style={[ styles.row, styles.header, styles.flex]}>
         <View>
-          <Text>Search for</Text>
-          <Text>Destination</Text>
+          <Text style={{color:'#d9dde2'}}>Search for</Text>
+          <Text style={{fontSize:24}} >Destination</Text>
         </View>
         <View>
-          <Text>Avatar</Text>
+          <Image style={styles.avatar} source={{uri:'https://randomuser.me/api/portraits/women/65.jpg'}}/>
         </View>
       </View>
     )
