@@ -1,13 +1,18 @@
 import React, { Component } from "react";
 
+
+
 import { Text, StyleSheet, View, Image, Dimensions,FlatList, ImageBackground, Animated } from "react-native";
+
 
 //import styleSheet
 import styles from '../src/style/styleSheet';
 
 const {width, height } = Dimensions.get('screen');
 
+
 //Add data
+
 const mocks = [{
   id: 1,
   user: {
@@ -90,7 +95,9 @@ const mocks = [{
   },
 ];
 
+
 class List extends Component {
+
   static navigationOptions = {
     header: (
       <View style={[ styles.row, styles.header, styles.flex]}>
@@ -185,12 +192,60 @@ renderDestination = item => {
 
   renderRecommended = () => {
     return (
-      <View style={[styles.flex, styles.column]}>
-        <Text>Recommended</Text>
+      <View style={[styles.flex, styles.column, styles.recommended]}>
+        <View style={[
+            styles.row, 
+            {
+            justifyContent:'space-between',
+            alignItems:'flex-end',
+            marginBottom:36,
+            paddingHorizontal: 36,
+            }
+          ]}>
+          <Text style={{fontSize:18}}>Recommended</Text>  
+          <Text style={{color: '#cbced3'}}>More</Text>  
+        </View>
+
+        <View style={[styles.flex, styles.column, styles.recommendedList]}>
+          <FlatList 
+          //feature to scroll picture like the card easily
+            horizontal
+            pagingEnabled
+            scrollEnabled
+            showHorizontalScrollIndicator ={false}
+            scrollEventThrottle={16}
+            snapToAlignment='end'
+            data = {this.props.destinations}
+            keyExtractor={(item, index) => `${item.id}`}
+            renderItem={({ item, index }) => this.renderRecommendation(item, index)}
+          />
+        </View>
       </View>
     );
   };
 
+  renderRecommendation = (item, index) => {
+    return(
+      <View style={[
+        styles.flex, styles.column, styles.recommendation, styles.shadow, 
+        ]}>
+        <View style={[styles.flex]}>
+          <ImageBackground 
+          style={[ {overflow: 'hidden'},styles.flex, styles.row, styles.recommendationImage ]}
+          source= {{uri:item.preview}}>
+              <Text style={{color:'black'}}>{item.temperature}℃</Text>
+              <Text style={{color:'black'}}>Hello</Text>
+          </ImageBackground>
+        </View>
+
+        <View style={[styles.flex, styles.column, {justifyContent:'space-evenly', padding: 18}]}>
+          <Text style={{fontSize: 18, fontWeight:'500', paddingBottom:8}}>{item.title}</Text>
+          <Text style={{color: '#cbced3'}}>{item.location}</Text>
+          <Text style={{color: '#007BFA'}}>{item.rating}</Text>
+        </View>
+      </View>
+    )
+  }
   render() {
     return (
       <View style={[styles.flex, styles.articles]}>
