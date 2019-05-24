@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Text, StyleSheet, View, Image, Dimensions,FlatList, ImageBackground } from "react-native";
+import { Text, StyleSheet, View, Image, Dimensions,FlatList, ImageBackground, Animated } from "react-native";
 
 //import styleSheet
 import styles from '../src/styleSheet';
@@ -104,6 +104,22 @@ class List extends Component {
       </View>
     )
   };
+ renderDots () {
+  const {destinations} = this.props;
+  
+    return (
+      <View style={[styles.flex, styles.row, 
+      { justifyContent:'center', alignItems:'center', marginTop:(36*2) }]}>
+        {destinations.map(item =>{
+          return (
+            <Animated.View 
+            key={`step-${item.id}`} 
+            style={[styles.dots, item.id === 1 ? styles.activeDot : null ]} />
+          )
+        })}
+    </View> 
+    )
+ }
 
   renderDestinations = () => {
     return (
@@ -121,6 +137,7 @@ class List extends Component {
         keyExtractor={(item, index) => `${item.id}`}
         renderItem={({ item }) => this.renderDestination(item)}
         />
+        {this.renderDots()}
       </View>
     );
   };
