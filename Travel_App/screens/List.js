@@ -3,6 +3,8 @@ import React, { Component } from "react";
 
 
 import { Text, StyleSheet, View, Image, Dimensions,FlatList, ImageBackground, Animated, ScrollView } from "react-native";
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 
 
 //import styleSheet
@@ -17,10 +19,10 @@ const {width, height } = Dimensions.get('screen');
 const mocks = [{
   id: 1,
   user: {
-    name: 'Phát',
+    name: 'Trần An Khang',
     avatar: 'https://randomuser.me/api/portraits/women/44.jpg'
   },
-  location:'Thành phố Hồ Chí Minh',
+  location:'Hồ Chí Minh',
   temperature: 30,
   title: 'Cầu Vàng',
   description:'Thành phố Đà Nẵng',
@@ -64,7 +66,7 @@ const mocks = [{
     temperature: 30,
     title: 'Cầu Vàng',
     description:'Thành phố Đà Nẵng',
-    rating: 4.2,
+    rating: 3,
     reviews: 1200,
     preview: 'https://images.unsplash.com/photo-1558127920-90f28455f888?auto=format&fit=crop&w=1350&q=80',
     images: [
@@ -84,7 +86,7 @@ const mocks = [{
     temperature: 30,
     title: 'Cầu Vàng',
     description:'Thành phố Đà Nẵng',
-    rating: 4.2,
+    rating: 4.5,
     reviews: 1200,
     preview: 'https://images.unsplash.com/photo-1558127920-90f28455f888?auto=format&fit=crop&w=1350&q=80',
     images: [
@@ -112,7 +114,7 @@ class List extends Component {
       </View>
     )
   };
-//  renderDots () {
+  //  renderDots () {
 //   const {destinations} = this.props;
 //   const dotPosition = Animated.divide(this.scrollX, width);
 //     return (
@@ -133,7 +135,23 @@ class List extends Component {
 //         })}
 //     </View> 
 //     )
-//  }
+  //  }
+
+  renderRatings(rating) {
+    const stars = new Array(5).fill(0);
+    return(
+      stars.map((value, index) =>{
+        const activeStar = Math.floor(rating) >= (index+1) ;
+        return (
+          <FontAwesome 
+          name="star" 
+          key={`star-${index}`} 
+          color={theme.colors[activeStar ? 'active' :'gray' ]}
+          />
+        )
+      })
+    )
+  }
 
   renderDestinations = () => {
     return (
@@ -158,7 +176,7 @@ class List extends Component {
     );
   };
 
-renderDestination = item => {
+  renderDestination = item => {
   return (
     <ImageBackground 
       style={[ styles.destination, styles.shadow]}
@@ -173,9 +191,13 @@ renderDestination = item => {
           />
         </View>
 
-        <View style={[ styles.column, {paddingHorizontal:18}]}>
+        <View style={[ styles.column, {flex:4,addingHorizontal:18}]}>
           <Text style={{color:theme.colors.white, fontWeight:'bold'}}>{item.user.name}</Text>
-          <Text style={{color:'white'}}>{item.location}</Text>
+          
+          <Text style={{color:'white'}}>
+            <EvilIcons name="location" size={theme.sizes.font *0.9} color={theme.colors.black} />
+            {item.location}
+          </Text>
         </View>
 
         <View style={[{ justifyContent: 'space-between', alignItems: 'center',}]}>
@@ -185,11 +207,15 @@ renderDestination = item => {
 
       <View style={[styles.column, styles.destinationInfo, styles.shadow]}>
         <Text style={{fontSize: theme.sizes.font, fontWeight:'500', paddingBottom:theme.sizes.padding /4}}>{item.title}</Text>
-        <Text style={{color: theme.colors.caption}}>{item.description}</Text>
+        <View style={[styles.row ,{justifyContent:'space-between',alignItems: 'flex-end',}]}>
+          <Text style={{color:theme.colors.caption}}>{item.description}</Text> 
+          <FontAwesome name="chevron-right" size={theme.sizes.font * 0.9} color={theme.colors.gray} />
+        </View>
+        
       </View>
     </ImageBackground>
   )
-}
+  };
 
   renderRecommended = () => {
     return (
@@ -234,19 +260,25 @@ renderDestination = item => {
           <ImageBackground 
           style={[ {overflow: 'hidden'},styles.flex, styles.row, styles.recommendationImage ]}
           source= {{uri:item.preview}}>
-              <Text style={{color:theme.colors.black}}>{item.temperature}℃</Text>
-              <Text style={{color:theme.colors.black}}>Hello</Text>
+              <Text style={{fontSize:theme.sizes.font * 1.25, color:theme.colors.white}}>{item.temperature}℃</Text>
+              <FontAwesome name="bookmark" size={theme.sizes.font * 1.5} color={theme.colors.white} />
           </ImageBackground>
         </View>
 
         <View style={[styles.flex, styles.column, {justifyContent:'space-evenly', padding: theme.sizes.padding/2}]}>
           <Text style={{fontSize: theme.sizes.font, fontWeight:'500', paddingBottom:theme.sizes.padding/2}}>{item.title}</Text>
           <Text style={{color: theme.colors.caption}}>{item.location}</Text>
-          <Text style={{color: theme.colors.active,paddingTop: 16,}}>{item.rating}</Text>
+
+          <View style={[styles.row, {justifyContent: 'space-between'}]}>
+            {this.renderRatings(item.rating)}
+            <Text style={{color: theme.colors.active, paddingTop: 16,}}>
+              {item.rating}
+            </Text>
+          </View>
         </View>
       </View>
     )
-  }
+  };
   render() {
     return (
       <ScrollView 
@@ -258,7 +290,7 @@ renderDestination = item => {
         {this.renderRecommended()}
       </ScrollView>
     );
-  }
+  };
 }
 
 List.defaultProps = {
