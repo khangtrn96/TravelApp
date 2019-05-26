@@ -2,11 +2,12 @@ import React, { Component } from "react";
 
 
 
-import { Text, StyleSheet, View, Image, Dimensions,FlatList, ImageBackground, Animated } from "react-native";
+import { Text, StyleSheet, View, Image, Dimensions,FlatList, ImageBackground, Animated, ScrollView } from "react-native";
 
 
 //import styleSheet
 import styles from '../src/style/styleSheet';
+import * as theme from '../theme'
 
 const {width, height } = Dimensions.get('screen');
 
@@ -102,8 +103,8 @@ class List extends Component {
     header: (
       <View style={[ styles.row, styles.header, styles.flex]}>
         <View>
-          <Text style={{color:'#d9dde2'}}>Search for</Text>
-          <Text style={{fontSize:24}} >Destination</Text>
+          <Text style={{color: theme.colors.gray}}>Search for</Text>
+          <Text style={{fontSize:theme.sizes.font+6}} >Destination</Text>
         </View>
         <View>
           <Image style={styles.avatar} source={{uri:'https://randomuser.me/api/portraits/women/65.jpg'}}/>
@@ -162,7 +163,7 @@ renderDestination = item => {
     <ImageBackground 
       style={[ styles.destination, styles.shadow]}
       source= {{uri:item.preview}}
-      imageStyle={{borderRadius: 16}}
+      imageStyle={{borderRadius: theme.sizes.border}}
     >
       <View style={[styles.row,{justifyContent: 'space-between'}]}>
         <View style={[styles.flex]}>
@@ -173,7 +174,7 @@ renderDestination = item => {
         </View>
 
         <View style={[ styles.column, {paddingHorizontal:18}]}>
-          <Text style={{color:'white', fontWeight:'bold'}}>{item.user.name}</Text>
+          <Text style={{color:theme.colors.white, fontWeight:'bold'}}>{item.user.name}</Text>
           <Text style={{color:'white'}}>{item.location}</Text>
         </View>
 
@@ -183,8 +184,8 @@ renderDestination = item => {
       </View>
 
       <View style={[styles.column, styles.destinationInfo, styles.shadow]}>
-        <Text style={{fontSize: 18, fontWeight:'500', paddingBottom:8}}>{item.title}</Text>
-        <Text style={{color: '#cbced3'}}>{item.description}</Text>
+        <Text style={{fontSize: theme.sizes.font, fontWeight:'500', paddingBottom:theme.sizes.padding /4}}>{item.title}</Text>
+        <Text style={{color: theme.colors.caption}}>{item.description}</Text>
       </View>
     </ImageBackground>
   )
@@ -203,7 +204,7 @@ renderDestination = item => {
             }
           ]}>
           <Text style={{fontSize:18}}>Recommended</Text>  
-          <Text style={{color: '#cbced3'}}>More</Text>  
+          <Text style={{color: theme.colors.caption}}>More</Text>  
         </View>
 
         <View style={[styles.flex, styles.column, styles.recommendedList]}>
@@ -233,25 +234,29 @@ renderDestination = item => {
           <ImageBackground 
           style={[ {overflow: 'hidden'},styles.flex, styles.row, styles.recommendationImage ]}
           source= {{uri:item.preview}}>
-              <Text style={{color:'black'}}>{item.temperature}℃</Text>
-              <Text style={{color:'black'}}>Hello</Text>
+              <Text style={{color:theme.colors.black}}>{item.temperature}℃</Text>
+              <Text style={{color:theme.colors.black}}>Hello</Text>
           </ImageBackground>
         </View>
 
-        <View style={[styles.flex, styles.column, {justifyContent:'space-evenly', padding: 18}]}>
-          <Text style={{fontSize: 18, fontWeight:'500', paddingBottom:8}}>{item.title}</Text>
-          <Text style={{color: '#cbced3'}}>{item.location}</Text>
-          <Text style={{color: '#007BFA'}}>{item.rating}</Text>
+        <View style={[styles.flex, styles.column, {justifyContent:'space-evenly', padding: theme.sizes.padding/2}]}>
+          <Text style={{fontSize: theme.sizes.font, fontWeight:'500', paddingBottom:theme.sizes.padding/2}}>{item.title}</Text>
+          <Text style={{color: theme.colors.caption}}>{item.location}</Text>
+          <Text style={{color: theme.colors.active,paddingTop: 16,}}>{item.rating}</Text>
         </View>
       </View>
     )
   }
   render() {
     return (
-      <View style={[styles.flex, styles.articles]}>
+      <ScrollView 
+      style={styles.flex}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{paddingVertical: theme.sizes.padding/2}}
+      >
         {this.renderDestinations()}
         {this.renderRecommended()}
-      </View>
+      </ScrollView>
     );
   }
 }

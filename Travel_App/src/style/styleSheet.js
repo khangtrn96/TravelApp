@@ -1,5 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
-
+import * as theme from '../../theme';
 const { width, height } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
@@ -32,20 +32,20 @@ const styles = StyleSheet.create({
       justifyContent:'space-between'
     },
     destination: {
-      width: width -(36*2),
-      height: width -(36*2),
-      marginHorizontal: 36,
-      paddingHorizontal: 36,
+      width: width -(theme.sizes.padding*2),
+      height: width -(theme.sizes.padding*2),
+      marginHorizontal: theme.sizes.padding,
+      paddingHorizontal: theme.sizes.padding,
       paddingVertical: 24,
-      padding: 36,
+      padding: theme.sizes.padding,
       borderRadius: 12,
       // position:'relative'
       overflow:'visible'
     },
     destinationInfo: {
       position:'absolute',
-      paddingHorizontal: 36,
-      paddingVertical: 24,
+      paddingHorizontal: theme.sizes.padding,
+      paddingVertical: theme.sizes.padding/2,
       borderRadius: 18,
       bottom:-36,
       right: 36,
@@ -54,37 +54,37 @@ const styles = StyleSheet.create({
       
     },
     recommended: {
-      //padding:36
+      paddingTop:50
     },
     recommendedList: {
       //paddingHorizontal:36
     },
     recommendation: {
-      width: (width -(36*2))/2 , 
-      //height:'auto',
-      marginRight: 18,
-      marginHorizontal: 18,
+      width: (width -(theme.sizes.padding*2))/2 , 
+      //height:,
+      marginRight: theme.sizes.padding/2,
+      marginHorizontal: theme.sizes.padding/2,
       // paddingHorizontal: 36,
       // paddingVertical: 24,
       backgroundColor:'white',
       
     },
     recommendationImage:{
-      width: (width-36*2)/2,
-      height: (width-36*2)/2,
-      borderTopRightRadius: 18,
-      borderTopLeftRadius: 18,
+      width: (width-theme.sizes.padding*2)/2,
+      height: (width-theme.sizes.padding*2)/2,
+      borderTopRightRadius: 9,
+      borderTopLeftRadius: 9,
       padding:16, 
       justifyContent:'space-between'
     },
     avatar: {
-      width:35,
-      height: 35,
+      width:theme.sizes.padding,
+      height: theme.sizes.padding,
       borderRadius:18,
     },
     rating: {
-      fontSize: 28,
-      color:'white',
+      fontSize: theme.sizes.font+10,
+      color:theme.colors.white,
       fontWeight:'bold'
     },
     shadow:{
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginHorizontal:6,
         borderWidth: 2.5,
-        backgroundColor:'#d9dde2',
+        backgroundColor: theme.colors.gray,
         borderColor:'transparent'
     },
     activeDot: {
