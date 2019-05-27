@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     },
     destinations: {
       // paddingHorizontal:36,
+      marginTop: -20,
       flex: 1,
       justifyContent:'space-between'
     },
@@ -54,10 +55,10 @@ const styles = StyleSheet.create({
       
     },
     recommended: {
-      paddingTop:50
+      paddingTop:70
     },
     recommendedList: {
-      //paddingHorizontal:36
+      paddingHorizontal:20
     },
     recommendation: {
       width: (width -(theme.sizes.padding*2))/2 , 

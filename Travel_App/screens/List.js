@@ -2,7 +2,15 @@ import React, { Component } from "react";
 
 
 
-import { Text, StyleSheet, View, Image, Dimensions,FlatList, ImageBackground, Animated, ScrollView } from "react-native";
+import { 
+  Text, 
+  View, 
+  Image, 
+  Dimensions,
+  FlatList, 
+  ImageBackground, 
+  Animated, 
+  ScrollView } from "react-native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 
@@ -10,6 +18,7 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 //import styleSheet
 import styles from '../src/style/styleSheet';
 import * as theme from '../theme'
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const {width, height } = Dimensions.get('screen');
 
@@ -22,6 +31,7 @@ const mocks = [{
     name: 'Trần An Khang',
     avatar: 'https://randomuser.me/api/portraits/women/44.jpg'
   },
+  saved: true,
   location:'Hồ Chí Minh',
   temperature: 30,
   title: 'Cầu Vàng',
@@ -42,6 +52,7 @@ const mocks = [{
     name: 'Phát',
     avatar: 'https://randomuser.me/api/portraits/women/44.jpg'
   },
+  saved: false,
   location:'Thành phố Hồ Chí Minh',
   temperature: 30,
   title: 'Cầu Vàng',
@@ -62,6 +73,7 @@ const mocks = [{
       name: 'Phát',
       avatar: 'https://randomuser.me/api/portraits/women/44.jpg'
     },
+    saved: false,
     location:'Thành phố Hồ Chí Minh',
     temperature: 30,
     title: 'Cầu Vàng',
@@ -82,6 +94,7 @@ const mocks = [{
       name: 'Phát',
       avatar: 'https://randomuser.me/api/portraits/women/44.jpg'
     },
+    saved: true,
     location:'Thành phố Hồ Chí Minh',
     temperature: 30,
     title: 'Cầu Vàng',
@@ -102,6 +115,10 @@ const mocks = [{
 class List extends Component {
 
   static navigationOptions = {
+    title:'Home',
+    headerStyle: {
+      backgroundColor:'#fff',
+    },
     header: (
       <View style={[ styles.row, styles.header, styles.flex]}>
         <View>
@@ -158,13 +175,13 @@ class List extends Component {
       <View style={[styles.flex, styles.column, styles.destinations]}>
         <FlatList
         horizontal
-        pagingEnabled
+        pagingEnabled// help slide one page 
         scrollEnabled
         showHorizontalScrollIndicator ={false}
         decelerationRate={0}
         scrollEventThrottle={16}
         snapToAlignment='center'
-        style={{overflow: 'visible',}}
+        style={{overflow: 'visible'}}
         data = {this.props.destinations}
         keyExtractor={(item, index) => `${item.id}`}
         onScroll={Animated.event([{nativeEvent: { contentOffset: { x: this.scrollX}}
@@ -177,44 +194,46 @@ class List extends Component {
   };
 
   renderDestination = item => {
+    const {navigation} = this.props;
   return (
-    <ImageBackground 
-      style={[ styles.destination, styles.shadow]}
-      source= {{uri:item.preview}}
-      imageStyle={{borderRadius: theme.sizes.border}}
-    >
-      <View style={[styles.row,{justifyContent: 'space-between'}]}>
-        <View style={[styles.flex]}>
-          <Image 
-            source={{ uri: item.user.avatar}}
-            style={styles.avatar}
-          />
+    <TouchableOpacity activeOpacity={50} onPress={() => navigation.navigate('Article', { item })}>
+      <ImageBackground 
+        style={[styles.flex, styles.destination, styles.shadow]}
+        source= {{uri:item.preview}}
+        imageStyle={{borderRadius: theme.sizes.border}}
+      >
+        <View style={[styles.row,{justifyContent: 'space-between'}]}>
+          <View style={{flex:0}}>
+            <Image 
+              source={{ uri: item.user.avatar}}
+              style={styles.avatar}
+            />
+          </View>
+
+          <View style={[ styles.column, {flex:2,addingHorizontal:18}]}>
+            <Text style={{color:theme.colors.white, fontWeight:'bold'}}>{item.user.name}</Text>
+            
+            <Text style={{color:'white'}}>
+              <EvilIcons name="location" size={theme.sizes.font *0.9} color={theme.colors.black} />
+              {item.location}
+            </Text>
+          </View>
+
+          <View style={[ {flex: 0, justifyContent: 'center', alignItems: 'flex-end',}]}>
+            <Text style={styles.rating}>{item.rating}</Text>
+          </View>
         </View>
 
-        <View style={[ styles.column, {flex:4,addingHorizontal:18}]}>
-          <Text style={{color:theme.colors.white, fontWeight:'bold'}}>{item.user.name}</Text>
-          
-          <Text style={{color:'white'}}>
-            <EvilIcons name="location" size={theme.sizes.font *0.9} color={theme.colors.black} />
-            {item.location}
-          </Text>
+        <View style={[styles.column, styles.destinationInfo, styles.shadow]}>
+          <Text style={{fontSize: theme.sizes.font, fontWeight:'500', paddingBottom:theme.sizes.padding /4}}>{item.title}</Text>
+          <View style={[styles.row ,{justifyContent:'space-between',alignItems: 'flex-end',}]}>
+            <Text style={{color:theme.colors.caption}}>{item.description.split('').slice(0,50)}...</Text> 
+            <FontAwesome name="chevron-right" size={theme.sizes.font * 0.9} color={theme.colors.gray} />
+          </View>
         </View>
-
-        <View style={[{ justifyContent: 'space-between', alignItems: 'center',}]}>
-          <Text style={styles.rating}>{item.rating}</Text>
-        </View>
-      </View>
-
-      <View style={[styles.column, styles.destinationInfo, styles.shadow]}>
-        <Text style={{fontSize: theme.sizes.font, fontWeight:'500', paddingBottom:theme.sizes.padding /4}}>{item.title}</Text>
-        <View style={[styles.row ,{justifyContent:'space-between',alignItems: 'flex-end',}]}>
-          <Text style={{color:theme.colors.caption}}>{item.description}</Text> 
-          <FontAwesome name="chevron-right" size={theme.sizes.font * 0.9} color={theme.colors.gray} />
-        </View>
-        
-      </View>
-    </ImageBackground>
-  )
+      </ImageBackground>
+    </TouchableOpacity>
+    )
   };
 
   renderRecommended = () => {
@@ -225,23 +244,27 @@ class List extends Component {
             {
             justifyContent:'space-between',
             alignItems:'flex-end',
-            marginBottom:36,
+            marginBottom:18,
             paddingHorizontal: 36,
             }
           ]}>
           <Text style={{fontSize:18}}>Recommended</Text>  
-          <Text style={{color: theme.colors.caption}}>More</Text>  
+          
+          <TouchableOpacity style={{color: theme.colors.caption}} > 
+            <Text>More</Text>
+          </TouchableOpacity> 
         </View>
 
         <View style={[styles.flex, styles.column, styles.recommendedList]}>
           <FlatList 
           //feature to scroll picture like the card easily
             horizontal
-            pagingEnabled
+            //pagingEnabled
             scrollEnabled
             showHorizontalScrollIndicator ={false}
             scrollEventThrottle={16}
             snapToAlignment='end'
+            style={{overflow: 'visible',}} //make clearly shadow 
             data = {this.props.destinations}
             keyExtractor={(item, index) => `${item.id}`}
             renderItem={({ item, index }) => this.renderRecommendation(item, index)}
@@ -260,8 +283,12 @@ class List extends Component {
           <ImageBackground 
           style={[ {overflow: 'hidden'},styles.flex, styles.row, styles.recommendationImage ]}
           source= {{uri:item.preview}}>
-              <Text style={{fontSize:theme.sizes.font * 1.25, color:theme.colors.white}}>{item.temperature}℃</Text>
-              <FontAwesome name="bookmark" size={theme.sizes.font * 1.5} color={theme.colors.white} />
+            <Text style={{fontSize:theme.sizes.font * 1.25, color:theme.colors.white}}>{item.temperature}℃</Text>
+            <FontAwesome 
+                  name={ item.saved ? "bookmark" : "bookmark-o"} 
+                  size={theme.sizes.font * 1.5} 
+                  color={theme.colors.white} 
+            />
           </ImageBackground>
         </View>
 
@@ -269,9 +296,9 @@ class List extends Component {
           <Text style={{fontSize: theme.sizes.font, fontWeight:'500', paddingBottom:theme.sizes.padding/2}}>{item.title}</Text>
           <Text style={{color: theme.colors.caption}}>{item.location}</Text>
 
-          <View style={[styles.row, {justifyContent: 'space-between'}]}>
+          <View style={[styles.row, { alignItems:'center', justifyContent: 'space-between',paddingTop: 8}]}>
             {this.renderRatings(item.rating)}
-            <Text style={{color: theme.colors.active, paddingTop: 16,}}>
+            <Text style={{color: theme.colors.active}}>
               {item.rating}
             </Text>
           </View>
