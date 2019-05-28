@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
       height: width -(theme.sizes.padding*2),
       marginHorizontal: theme.sizes.padding,
       paddingHorizontal: theme.sizes.padding,
-      paddingVertical: 24,
+      //paddingVertical: 24,
+      marginBottom:72,
       padding: theme.sizes.padding,
       borderRadius: 12,
       // position:'relative'
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
       
     },
     recommended: {
-      paddingTop:70
+      //paddingTop:70
     },
     recommendedList: {
       paddingHorizontal:20
