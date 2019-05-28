@@ -115,10 +115,6 @@ const mocks = [{
 class List extends Component {
 
   static navigationOptions = {
-    title:'Home',
-    headerStyle: {
-      backgroundColor:'#fff',
-    },
     header: (
       <View style={[ styles.row, styles.header, styles.flex]}>
         <View>
@@ -196,7 +192,7 @@ class List extends Component {
   renderDestination = item => {
     const {navigation} = this.props;
   return (
-    <TouchableOpacity activeOpacity={50} onPress={() => navigation.navigate('Article', { item })}>
+    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Article', { item })}>
       <ImageBackground 
         style={[styles.flex, styles.destination, styles.shadow]}
         source= {{uri:item.preview}}
