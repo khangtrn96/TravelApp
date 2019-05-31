@@ -24,6 +24,11 @@ const styles_travel = {
         heght:42,
         justifyContent: 'center',
         alignItems:'center'
+      },
+      content: {
+        backgroundColor: "white",
+        borderBottomLeftRadius: 16,
+        borderBottomRightRadius: 16,
       }
 }
 

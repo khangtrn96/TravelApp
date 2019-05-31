@@ -192,7 +192,7 @@ class List extends Component {
   renderDestination = item => {
     const {navigation} = this.props;
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Article', { item })}>
+    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Article', { article:item })}>
       <ImageBackground 
         style={[styles.flex, styles.destination, styles.shadow]}
         source= {{uri:item.preview}}

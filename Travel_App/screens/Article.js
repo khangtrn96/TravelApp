@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
 
 //Import style
 import styles from '../src/style/styleArticle';
@@ -26,10 +26,15 @@ class Article extends Component {
       })
 
     render() {
+        const { navigation } = this.props;
+        const article = navigation.getParam('article');
+
         return (
             <View style={styles.flex}>
                 <View style={styles.flex}>
-                    <Text>Header</Text>
+                    <ImageBackground source={{ uri: article.preview }} style={{}}>
+                        <Text>Header</Text>
+                    </ImageBackground>
                 </View>
 
                 <View style={styles.flex}>
