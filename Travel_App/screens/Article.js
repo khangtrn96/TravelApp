@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View, Image, Animated, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
+import { Text, StyleSheet, View, Image, Animated, TouchableOpacity, ImageBackground, Dimensions, ScrollView } from 'react-native';
 
 //Import style
 import styles from '../src/style/styleArticle';
@@ -43,9 +43,9 @@ class Article extends Component {
                   });
                   return (
                     <Animated.View 
-                    key={`step-${item}-${index}`} 
-                    style={[styles.dots, {opacity}]} >
-                    </Animated.View>
+                        key={`step-${item}-${index}`} 
+                        style={[styles.dots, {opacity}]} 
+                    ></Animated.View>
                   )
                 })}
             </View> 
@@ -59,7 +59,25 @@ class Article extends Component {
         return (
             <View style={styles.flex}>
                     <View style={[styles.flex, {justifyContent:'flex-end'}]}>
-                        {article.images.map((img, index) => <Image key={`${index}-${img}`} source={{ uri: img}} /> )}
+                        <ScrollView
+                            horizontal
+                            pagingEnabled// help slide one page 
+                            scrollEnabled
+                            showsHorizontalScrollIndicator ={false}
+                            decelerationRate={0}
+                            scrollEventThrottle={16}
+                            snapToAlignment='center'
+                            style={{overflow: 'visible'}}
+                        >
+                            {
+                            article.images.map((img, index) => (
+                                <Image 
+                                    key={`${index}-${img}`} 
+                                    source={{ uri: img}} 
+                                    style={{width, height: 200}} />
+                                ))
+                            }
+                        </ScrollView>
                         {this.renderDots()}
                     </View>
 

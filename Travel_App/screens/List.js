@@ -173,7 +173,7 @@ class List extends Component {
         horizontal
         pagingEnabled// help slide one page 
         scrollEnabled
-        showHorizontalScrollIndicator ={false}
+        showsHorizontalScrollIndicator ={false}
         decelerationRate={0}
         scrollEventThrottle={16}
         snapToAlignment='center'
@@ -192,7 +192,7 @@ class List extends Component {
   renderDestination = item => {
     const {navigation} = this.props;
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Article', { article:item })}>
+    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Article', { article: item })}>
       <ImageBackground 
         style={[styles.flex, styles.destination, styles.shadow]}
         source= {{uri:item.preview}}
@@ -255,9 +255,9 @@ class List extends Component {
           <FlatList 
           //feature to scroll picture like the card easily
             horizontal
-            //pagingEnabled
+            pagingEnabled
             scrollEnabled
-            showHorizontalScrollIndicator ={false}
+            showsHorizontalScrollIndicator ={false}
             scrollEventThrottle={16}
             snapToAlignment='end'
             style={{overflow: 'visible',}} //make clearly shadow 
