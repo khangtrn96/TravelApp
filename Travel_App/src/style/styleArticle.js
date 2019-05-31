@@ -29,7 +29,16 @@ const styles_travel = {
         backgroundColor: "white",
         borderBottomLeftRadius: 16,
         borderBottomRightRadius: 16,
-      }
+      },
+      dots: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        marginHorizontal:6,
+        borderWidth: 2.5,
+        backgroundColor: theme.colors.gray,
+        borderColor:'transparent'
+    },
 }
 
 export default styles_travel;

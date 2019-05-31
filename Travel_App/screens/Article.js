@@ -28,17 +28,17 @@ class Article extends Component {
         )
       })
 
-      renderDots () {
+      renderDots= () => {
           const {navigation} = this.props;
           const article = navigation.getParam('article')
           const dotPosition = Animated.divide(this.scrollX, width);
             return (
               <View style={[styles.flex, styles.row, 
-              { justifyContent:'center', alignItems:'center', marginTop:(36*2) }]}>
+              { justifyContent:'center', alignItems:'center'}]}>
                 {article.images.map((item,index) =>{
                   const opacity = dotPosition.interpolate({
                     inputRange: [index -1, index, index +1],
-                    outputRange: [0, 1, 0],
+                    outputRange: [0.5, 1, 0.5],
                     extrapolate: 'clamp'
                   });
                   return (
@@ -68,6 +68,8 @@ class Article extends Component {
                             scrollEventThrottle={16}
                             snapToAlignment='center'
                             style={{overflow: 'visible'}}
+                            onScroll={Animated.event([{nativeEvent: { contentOffset: { x: this.scrollX}}
+                            }])}
                         >
                             {
                             article.images.map((img, index) => (
