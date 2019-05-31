@@ -12,16 +12,18 @@ const styles_travel = {
         flexDirection: "row"
       },
       header: {
-        backgroundColor: "transparent",
+        backgroundColor: "gray",
         paddingHorizontal: 36,
         paddingTop: 48,
-        paddingBottom: 24,
+        //paddingBottom: 24,
         justifyContent: 'space-between',
         alignItems: 'center',
       },
       back: {
         width:42, 
-        heght:42
+        heght:42,
+        justifyContent: 'center',
+        alignItems:'center'
       }
 }
 

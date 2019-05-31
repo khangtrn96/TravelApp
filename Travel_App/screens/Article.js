@@ -11,7 +11,8 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 class Article extends Component {
-    static navigationOptions = ({navigation}) => {
+    
+    static navigationOptions = ({navigation}) => ({
         header: (
           <View style={[ styles.row, styles.header, styles.flex]}>
             <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
@@ -22,7 +23,7 @@ class Article extends Component {
             </TouchableOpacity>
           </View>
         )
-      };
+      })
 
     render() {
         return (

@@ -11,7 +11,7 @@ const AppNavigator = createStackNavigator(
     },
     {
         initialRouteName: "List",
-        headerMode:'float'
+        headerMode:"float"
     }
 );
 
