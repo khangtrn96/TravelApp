@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import { Text, StyleSheet, View, Image, Animated, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
 
 //Import style
 import styles from '../src/style/styleArticle';
@@ -10,8 +10,11 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
+const {width, height } = Dimensions.get('screen');
+
 class Article extends Component {
-    
+    scrollX = new Animated.Value(0);
+     
     static navigationOptions = ({navigation}) => ({
         header: (
           <View style={[ styles.row, styles.header, styles.flex]}>
@@ -25,17 +28,40 @@ class Article extends Component {
         )
       })
 
+      renderDots () {
+          const {navigation} = this.props;
+          const article = navigation.getParam('article')
+          const dotPosition = Animated.divide(this.scrollX, width);
+            return (
+              <View style={[styles.flex, styles.row, 
+              { justifyContent:'center', alignItems:'center', marginTop:(36*2) }]}>
+                {article.images.map((item,index) =>{
+                  const opacity = dotPosition.interpolate({
+                    inputRange: [index -1, index, index +1],
+                    outputRange: [0, 1, 0],
+                    extrapolate: 'clamp'
+                  });
+                  return (
+                    <Animated.View 
+                    key={`step-${item}-${index}`} 
+                    style={[styles.dots, {opacity}]} >
+                    </Animated.View>
+                  )
+                })}
+            </View> 
+            )
+           }      
+
     render() {
         const { navigation } = this.props;
         const article = navigation.getParam('article');
 
         return (
             <View style={styles.flex}>
-                <View style={styles.flex}>
-                    <ImageBackground source={{ uri: article.preview }} style={{}}>
-                        <Text>Header</Text>
-                    </ImageBackground>
-                </View>
+                    <View style={[styles.flex, {justifyContent:'flex-end'}]}>
+                        {article.images.map((img, index) => <Image key={`${index}-${img}`} source={{ uri: img}} /> )}
+                        {this.renderDots()}
+                    </View>
 
                 <View style={styles.flex}>
                     <Text>Content</Text>
