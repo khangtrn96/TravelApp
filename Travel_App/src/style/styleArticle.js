@@ -12,7 +12,7 @@ const styles_travel = {
         flexDirection: "row"
       },
       header: {
-        backgroundColor: "gray",
+        backgroundColor: "transparent",
         paddingHorizontal: 36,
         paddingTop: 48,
         //paddingBottom: 24,

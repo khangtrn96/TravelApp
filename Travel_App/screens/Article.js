@@ -25,10 +25,11 @@ class Article extends Component {
                 <MaterialIcons style={{fontSize:36}} name='more-vert'/>
             </TouchableOpacity>
           </View>
-        )
+        ),
+        headerTransparent: true,
       })
 
-      renderDots= () => {
+      renderDots () {
           const {navigation} = this.props;
           const article = navigation.getParam('article')
           const dotPosition = Animated.divide(this.scrollX, width);
@@ -76,7 +77,7 @@ class Article extends Component {
                                 <Image 
                                     key={`${index}-${img}`} 
                                     source={{ uri: img}} 
-                                    style={{width, height: 200}} />
+                                    style={{width, height: width * 0.75}} />
                                 ))
                             }
                         </ScrollView>
