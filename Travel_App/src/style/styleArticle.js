@@ -26,9 +26,29 @@ const styles_travel = {
         alignItems:'center'
       },
       content: {
-        backgroundColor: "white",
-        borderBottomLeftRadius: 16,
-        borderBottomRightRadius: 16,
+        backgroundColor: theme.colors.white,
+        borderTopLeftRadius: 16,
+        borderTopRightRadius: 16,
+      },
+      contentHeader:{
+        padding: theme.sizes.padding
+      },
+      avatar: {
+        position:'absolute',
+        top: -theme.sizes.margin,
+        right: theme.sizes.margin,
+        width:theme.sizes.padding * 2,
+        height: theme.sizes.padding * 2,
+        borderRadius:36,
+      },
+      shadow:{
+        shadowColor: 'black',
+        shadowOffset: {
+          width: 0,
+          height: 6,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
       },
       dots: {
         width: 10,
@@ -39,6 +59,15 @@ const styles_travel = {
         backgroundColor: theme.colors.gray,
         borderColor:'transparent'
     },
+    title:{
+      fontSize: theme.sizes.font*2,
+      fontWeight: 'bold'    
+    },
+    description:{
+      fontSize: theme.sizes.font,
+      color: theme.colors.caption,
+      lineHeight: theme.sizes.font*1.5
+    }
 }
 
 export default styles_travel;

@@ -35,7 +35,7 @@ const mocks = [{
   location:'Hồ Chí Minh',
   temperature: 30,
   title: 'Cầu Vàng',
-  description:'Thành phố Đà Nẵng',
+  description:'Đà Nẵng là một thành phố trực thuộc trung ương, nằm trong vùng Duyên hải Nam Trung Bộ Việt Nam, là trung tâm kinh tế, tài chính, chính trị, văn hóa, du lịch, giáo dục - đào tạo, khoa học và công nghệ, y tế chuyên sâu của khu vực miền Trung - Tây Nguyên và cả nước.',
   rating: 4.2,
   reviews: 1200,
   preview: 'https://images.unsplash.com/photo-1558117338-7ef3d637ce2f?auto=format&fit=crop&w=1353&q=80',
@@ -223,7 +223,8 @@ class List extends Component {
         <View style={[styles.column, styles.destinationInfo, styles.shadow]}>
           <Text style={{fontSize: theme.sizes.font, fontWeight:'500', paddingBottom:theme.sizes.padding /4}}>{item.title}</Text>
           <View style={[styles.row ,{justifyContent:'space-between',alignItems: 'flex-end',}]}>
-            <Text style={{color:theme.colors.caption}}>{item.description.split('').slice(0,50)}...</Text> 
+            <Text style={{color:theme.colors.caption}}>
+            {item.description.split('').slice(0,30)}...</Text> 
             <FontAwesome name="chevron-right" size={theme.sizes.font * 0.9} color={theme.colors.gray} />
           </View>
         </View>

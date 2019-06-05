@@ -35,7 +35,7 @@ class Article extends Component {
           const dotPosition = Animated.divide(this.scrollX, width);
             return (
               <View style={[styles.flex, styles.row, 
-              { justifyContent:'center', alignItems:'center'}]}>
+              { justifyContent:'center', alignItems:'center', paddingBottom: 100,}]}>
                 {article.images.map((item,index) =>{
                   const opacity = dotPosition.interpolate({
                     inputRange: [index -1, index, index +1],
@@ -51,7 +51,25 @@ class Article extends Component {
                 })}
             </View> 
             )
-           }      
+           }   
+
+    renderRatings(rating) {
+    const stars = new Array(5).fill(0);
+    return(
+        stars.map((value, index) =>{
+        const activeStar = Math.floor(rating) >= (index+1) ;
+        return (
+            <FontAwesome 
+            name="star" 
+            key={`star-${index}`} 
+            color={theme.colors[activeStar ? 'active' :'gray' ]}
+            size={theme.sizes.font}
+            style={{marginRight: 4}}
+            />
+        )
+        })
+    )
+    }   
 
     render() {
         const { navigation } = this.props;
@@ -59,7 +77,7 @@ class Article extends Component {
 
         return (
             <View style={styles.flex}>
-                    <View style={[styles.flex, {justifyContent:'flex-end'}]}>
+                    <View style={[styles.flex,{marginBottom: -theme.sizes.margin*3}] }>
                         <ScrollView
                             horizontal
                             pagingEnabled// help slide one page 
@@ -68,7 +86,6 @@ class Article extends Component {
                             decelerationRate={0}
                             scrollEventThrottle={16}
                             snapToAlignment='center'
-                            style={{overflow: 'visible'}}
                             onScroll={Animated.event([{nativeEvent: { contentOffset: { x: this.scrollX}}
                             }])}
                         >
@@ -77,15 +94,32 @@ class Article extends Component {
                                 <Image 
                                     key={`${index}-${img}`} 
                                     source={{ uri: img}} 
-                                    style={{width, height: width * 0.75}} />
+                                    resizeMode='cover'
+                                    style={{width, height: width}} />
                                 ))
                             }
                         </ScrollView>
                         {this.renderDots()}
                     </View>
 
-                <View style={styles.flex}>
-                    <Text>Content</Text>
+                <View style={[styles.flex, styles.content]}>
+                    <View style={[styles.flex, styles.contentHeader]}>
+                        <Image style={[styles.avatar, styles.shadow]} source={{uri: article.user.avatar}}></Image>
+                        <Text style={styles.title}>{article.title}</Text>
+                        <View style={[styles.row, { alignItems:'center', marginVertical: theme.sizes.margin /2 }]}>
+                            {this.renderRatings(article.rating)}
+                            <Text style={{marginLeft:theme.sizes.margin, color: theme.colors.caption}}>
+                                ({article.reviews} reviews)
+                            </Text>
+                        </View>
+
+                        <TouchableOpacity> 
+                            <Text style={styles.description}>
+                                {article.description.split('').slice(0, 180)}...
+                                <Text style={{color: theme.colors.active}}>Read more</Text> 
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
             
