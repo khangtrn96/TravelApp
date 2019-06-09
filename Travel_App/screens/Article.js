@@ -34,8 +34,7 @@ class Article extends Component {
           const article = navigation.getParam('article')
           const dotPosition = Animated.divide(this.scrollX, width);
             return (
-              <View style={[styles.flex, styles.row, 
-              { justifyContent:'center', alignItems:'center', paddingBottom: 100,}]}>
+              <View style={[styles.flex, styles.row, styles.dotsContainer]}>
                 {article.images.map((item,index) =>{
                   const opacity = dotPosition.interpolate({
                     inputRange: [index -1, index, index +1],
@@ -56,7 +55,7 @@ class Article extends Component {
     renderRatings(rating) {
     const stars = new Array(5).fill(0);
     return(
-        stars.map((value, index) =>{
+        stars.map((_, index) =>{
         const activeStar = Math.floor(rating) >= (index+1) ;
         return (
             <FontAwesome 

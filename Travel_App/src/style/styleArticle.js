@@ -12,7 +12,7 @@ const styles_travel = {
         flexDirection: "row"
       },
       header: {
-        backgroundColor: "transparent",
+        //backgroundColor: "transparent",
         paddingHorizontal: 36,
         paddingTop: 48,
         //paddingBottom: 24,
@@ -58,7 +58,15 @@ const styles_travel = {
         borderWidth: 2.5,
         backgroundColor: theme.colors.gray,
         borderColor:'transparent'
-    },
+      },
+      dotsContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 36,
+        right: 0,
+        left: 0
+      },
     title:{
       fontSize: theme.sizes.font*2,
       fontWeight: 'bold'    
